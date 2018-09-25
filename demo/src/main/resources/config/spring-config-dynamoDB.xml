@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="loginLoadDAO" class="com.egroup.login.dynamoDB.dao.impl.LoginLoadDAOImpl">
+	</bean>
+
+	<bean id="loginTokenDAO" class="com.egroup.login.dynamoDB.dao.impl.LoginTokenDAOImpl">
+	</bean>
+
+	<bean id="saveDAO" class="com.egroup.dynamoDB.dao.impl.SaveDAOImpl">
+	</bean>
+
+	<bean id="deleteDAO" class="com.egroup.dynamoDB.dao.impl.DeleteDAOImpl">
+	</bean>	
+	
+	<bean id="buyInfoDAO" class="com.egroupai.webapp.dao.impl.BuyInfoDAOImpl">
+	</bean>
+	
+	<bean id="egroupaiLoadDAO" class="com.egroupai.webapp.dao.impl.EgroupaiLoadDAOImpl">
+	</bean>
+	
+	<bean id="companyPublicKeyDAO" class="com.egroupai.webapp.dao.impl.CompanyPublicKeyDAOImpl">
+	</bean>
+</beans>
+

@@ -1,0 +1,19 @@
+aws:
+  bucketname: egroupai-test
+  loggroupname: egroupai-test_logs
+  
+pos:
+  key: 7hSMIrh934jVLFHz147XHlot
+  merchantName: eGroupAI
+  merId: 3197
+  merchantId: 8220276806477
+  terminalID: 90008230
+  txtType: 0
+  option: 1
+  customize: 1
+  autoCap: 1
+  numberOfPay: 1
+  url: http://localhost:8080/payCompleteReturn
+  
+engine:
+  path: C:/Users/eGroup/Desktop/Engine

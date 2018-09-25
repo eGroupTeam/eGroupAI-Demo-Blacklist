@@ -1,0 +1,7 @@
+/.settings/
+*.class
+**/WorkSpace/**
+target
+.classpath
+.project
+/bin/
