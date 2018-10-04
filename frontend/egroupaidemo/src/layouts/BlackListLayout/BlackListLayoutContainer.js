@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { getResult } from 'redux/modules/components/Recognition/selectors';
+import { getResult } from 'redux/modules/Recognition/selectors';
 
 import BlackListLayout from './BlackListLayout';
 

@@ -70,20 +70,19 @@ export const stopRetriveFacesEpic = (action$, state$) =>
   action$.pipe(
     ofType(STOP_RETRIVE_FACES),
     flatMap(action => {
-      if (state$.value.getIn(['components', 'Train', 'ui', 'isAutoTrain'])) {
+      if (state$.value.getIn(['Train', 'ui', 'isAutoTrain'])) {
         return [
           fetchPostModelTrain({
             trainName: action.payload,
             // scenarioType a unchangeable param detail here http://egroup-eds-env.d2mnbckxqi.ap-northeast-1.elasticbeanstalk.com/dashboard/flow/aea8cdd4df534fcd88319783c44f3024/2018-08-21T03:04:51.972Z
             scenarioType: '1',
             blackStatus: state$.value.getIn([
-              'components',
               'Train',
               'ui',
               'blackStatus'
             ]),
             imagePathList: state$.value
-              .getIn(['components', 'Train', 'ui', 'retrivedFaces'])
+              .getIn(['Train', 'ui', 'retrivedFaces'])
               .map(value => value.frameFacePath)
               .toJS()
           })

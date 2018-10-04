@@ -8,12 +8,14 @@ import WhiteList from './WhiteList';
 import WhiteListEpics from './WhiteList/epics';
 import Train from './Train';
 import TrainEpics from './Train/epics';
+import EngineSettings from './EngineSettings';
 
-export const componentsEpics = combineEpics(TrainEpics, BlackListEpics, WhiteListEpics);
+export const rootEpic = combineEpics(TrainEpics, BlackListEpics, WhiteListEpics);
 
-export const components = combineReducers({
+export const rootReducer = combineReducers({
   Recognition,
   Train,
   BlackList,
-  WhiteList
+  WhiteList,
+  EngineSettings
 });

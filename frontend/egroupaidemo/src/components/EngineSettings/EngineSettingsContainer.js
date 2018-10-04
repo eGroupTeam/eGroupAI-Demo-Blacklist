@@ -1,23 +1,18 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getIsStarted, getResult } from 'redux/modules/Recognition/selectors';
 import { getEngineSettingsState } from 'redux/modules/EngineSettings/selectors';
 
 import actionCreators from 'redux/modules/actionCreators';
 
-import Recognition from './Recognition';
+import EngineSettings from './EngineSettings';
 
-const mapStateToProps = state => ({
-  isStarted: getIsStarted(state),
-  result: getResult(state),
-  ...getEngineSettingsState(state).toJS()
-});
+const mapStateToProps = state => getEngineSettingsState(state).toJS();
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      ...actionCreators.recognition
+      ...actionCreators.engineSettings
     },
     dispatch
   );
@@ -25,4 +20,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Recognition);
+)(EngineSettings);

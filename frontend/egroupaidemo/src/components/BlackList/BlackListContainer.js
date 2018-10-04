@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getBlackState } from 'redux/modules/components/BlackList/selectors';
+import { getBlackState } from 'redux/modules/BlackList/selectors';
 
 import actionCreators from 'redux/modules/actionCreators';
 
@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      ...actionCreators.components.blackList
+      ...actionCreators.blackList
     },
     dispatch
   );

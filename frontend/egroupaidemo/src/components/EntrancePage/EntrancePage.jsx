@@ -1,14 +1,27 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { Header, Card } from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom';
+
+import Content from 'components/Content'
 
 export default class EntrancePage extends Component {
-  static propTypes = {
-    prop: PropTypes
-  }
-
   render() {
     return (
-      <div>請選擇demo</div>
+      <Content>
+        <Header>請選擇demo</Header>
+        <Card.Group>
+          <Card
+            as={NavLink}
+            to='/welcome-demo'
+            header='歡迎光臨'
+          />
+          <Card
+            as={NavLink}
+            to='/blacklist-demo'
+            header='黑白名單'
+          />
+        </Card.Group>
+      </Content>
     )
   }
 }

@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getWhiteState } from 'redux/modules/components/WhiteList/selectors';
+import { getWhiteState } from 'redux/modules/WhiteList/selectors';
 
 import actionCreators from 'redux/modules/actionCreators';
 
@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      ...actionCreators.components.whiteList
+      ...actionCreators.whiteList
     },
     dispatch
   );

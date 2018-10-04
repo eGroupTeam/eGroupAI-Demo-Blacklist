@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import { combineReducers } from 'redux-immutable';
-import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import { createEpicMiddleware } from 'redux-observable';
 import { fromJS } from 'immutable';
 import {
   connectRouter,
@@ -8,14 +7,7 @@ import {
 } from 'connected-react-router/immutable';
 import { createBrowserHistory } from 'history';
 
-import { componentsEpics, components } from './modules/components';
-
-// root reducer
-const rootReducer = combineReducers({
-  components
-});
-// root epic
-const rootEpic = combineEpics(componentsEpics);
+import { rootEpic, rootReducer } from './modules';
 
 // initialState
 const initialState = fromJS();

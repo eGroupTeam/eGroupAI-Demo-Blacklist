@@ -5,4 +5,4 @@ export const {
   fetchGetBlackWhiteRequest,
   fetchGetBlackWhiteSuccess,
   fetchGetBlackWhiteFailure
-} = actionCreators.components.whiteList;
+} = actionCreators.whiteList;

@@ -25,7 +25,7 @@ import {
 
 const ui = handleActions(
   {
-    [WAIT_USER_TO_TRAIN]: (state, action) =>
+    [WAIT_USER_TO_TRAIN]: state =>
       set(state, 'waitUserToTrain', true),
     [START_RETRIVE_FACES]: state =>
       merge(state, {
