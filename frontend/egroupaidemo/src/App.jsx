@@ -10,6 +10,7 @@ import { store, history } from 'redux/configureStore';
 
 import EntrancePage from 'components/EntrancePage';
 import ErrorBoundry from 'components/ErrorBoundry';
+import Welcome from 'components/Welcome';
 
 import BlackListLayout from 'layouts/BlackListLayout';
 
@@ -23,6 +24,7 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={EntrancePage} />
             <Route path="/blacklist-demo" component={BlackListLayout} />
+            <Route path="/welcome-demo" component={Welcome} />
             <Route path="*" render={() => (<div>查無頁面</div>)}/>
           </Switch>
         </ConnectedRouter>
