@@ -3,12 +3,15 @@ import { Switch, Route } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router/immutable';
-import { store, history } from 'redux/configureStore';
-
-import BasicLayout from 'layouts/BasicLayout';
-import ErrorBoundry from 'components/ErrorBoundry';
 import moment from 'moment';
 import 'moment/locale/zh-tw';
+
+import { store, history } from 'redux/configureStore';
+
+import EntrancePage from 'components/EntrancePage';
+import ErrorBoundry from 'components/ErrorBoundry';
+
+import BlackListLayout from 'layouts/BlackListLayout';
 
 moment.locale(navigator.language.toLowerCase());
 
@@ -18,7 +21,9 @@ const App = () => {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <Switch>
-            <Route path="/" component={BasicLayout} />
+            <Route path="/" exact component={EntrancePage} />
+            <Route path="/blacklist-demo" component={BlackListLayout} />
+            <Route path="*" render={() => (<div>查無頁面</div>)}/>
           </Switch>
         </ConnectedRouter>
       </Provider>

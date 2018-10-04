@@ -18,7 +18,7 @@ const leftItems = [
     key: 'left1',
     as: NavLink,
     name: '辨識',
-    to: '/recognition',
+    to: '/blacklist-demo',
     icon: 'user',
     exact: true,
     link: false
@@ -27,7 +27,7 @@ const leftItems = [
     key: 'left2',
     as: NavLink,
     name: '白名單',
-    to: '/whitelist',
+    to: '/blacklist-demo/whitelist',
     icon: 'list',
     link: false
   },
@@ -35,7 +35,7 @@ const leftItems = [
     key: 'left3',
     as: NavLink,
     name: '黑名單',
-    to: '/blacklist',
+    to: '/blacklist-demo/blacklist',
     icon: 'list alternate',
     link: false
   },
@@ -43,7 +43,7 @@ const leftItems = [
     key: 'left4',
     as: NavLink,
     name: '訓練',
-    to: '/train',
+    to: '/blacklist-demo/train',
     icon: 'save',
     link: false
   }
@@ -59,10 +59,10 @@ const StyledRouter = styled.main`
 
 const Router = () => (
   <Switch>
-    <Route exact path="/recognition" component={Recognition} />
-    <Route exact path="/whitelist" component={WhiteList} />
-    <Route exact path="/blacklist" component={BlackList} />
-    <Route exact path="/train" component={Train} />
+    <Route exact path="/blacklist-demo" component={Recognition} />
+    <Route exact path="/blacklist-demo/whitelist" component={WhiteList} />
+    <Route exact path="/blacklist-demo/blacklist" component={BlackList} />
+    <Route exact path="/blacklist-demo/train" component={Train} />
   </Switch>
 );
 

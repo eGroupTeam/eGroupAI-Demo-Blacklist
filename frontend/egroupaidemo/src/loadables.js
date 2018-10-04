@@ -20,3 +20,8 @@ export const WhiteList = Loadable({
   loader: () => import('components/WhiteList'),
   loading: PageLoader
 });
+
+export const EntrancePage = Loadable({
+  loader: () => import('components/EntrancePage'),
+  loading: PageLoader
+});
