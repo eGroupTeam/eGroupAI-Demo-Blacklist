@@ -1,12 +1,12 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getResult } from 'redux/modules/pages/Home/selectors';
+import { getResult } from 'redux/modules/components/Recognition/selectors';
 import {
   getUIState,
   getModelTrainState,
   getModelSwitchState
-} from 'redux/modules/pages/Train/selectors';
+} from 'redux/modules/components/Train/selectors';
 
 import actionCreators from 'redux/modules/actionCreators';
 
@@ -22,7 +22,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      ...actionCreators.pages.train
+      ...actionCreators.components.train
     },
     dispatch
   );

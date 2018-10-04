@@ -7,20 +7,20 @@ import { withnprogress } from 'utils';
 
 import Content from 'components/Content';
 
-class Black extends Component {
+class WhiteList extends Component {
   static propTypes = {
-    blackState: ImmutablePropTypes.map.isRequired,
+    whiteState: ImmutablePropTypes.map.isRequired,
     fetchGetBlackWhite: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     this.props.fetchGetBlackWhite({
-      blackStatus: 2
+      blackStatus: 1
     });
   }
 
   render() {
-    const data = this.props.blackState.get('data');
+    const data = this.props.whiteState.get('data');
     if (data.size) {
       return (
         <Content>
@@ -46,4 +46,4 @@ class Black extends Component {
   }
 }
 
-export default compose(withnprogress)(Black);
+export default compose(withnprogress)(WhiteList);

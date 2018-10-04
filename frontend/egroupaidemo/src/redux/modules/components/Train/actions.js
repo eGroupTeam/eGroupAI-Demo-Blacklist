@@ -20,4 +20,4 @@ export const {
   fetchPostModelSwitchRequest,
   fetchPostModelSwitchSuccess,
   fetchPostModelSwitchFailure
-} = actionCreators.pages.train;
+} = actionCreators.components.train;

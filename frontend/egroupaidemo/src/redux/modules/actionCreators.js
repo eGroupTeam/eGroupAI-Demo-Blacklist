@@ -1,18 +1,18 @@
 import { createActions } from 'redux-actions';
 
 const actionMap = {
-  PAGES: {
-    HOME: {
+  COMPONENTS: {
+    RECOGNITION: {
       TOGGLE_RECOGNIZE: undefined,
       SET_RESULT: undefined
     },
-    WHITE: {
+    WHITE_LIST: {
       FETCH_GET_BLACK_WHITE: undefined,
       FETCH_GET_BLACK_WHITE_REQUEST: undefined,
       FETCH_GET_BLACK_WHITE_SUCCESS: undefined,
       FETCH_GET_BLACK_WHITE_FAILURE: undefined
     },
-    BLACK: {
+    BLACK_LIST: {
       FETCH_GET_BLACK_WHITE: undefined,
       FETCH_GET_BLACK_WHITE_REQUEST: undefined,
       FETCH_GET_BLACK_WHITE_SUCCESS: undefined,

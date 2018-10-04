@@ -8,14 +8,14 @@ import {
 } from 'connected-react-router/immutable';
 import { createBrowserHistory } from 'history';
 
-import { pagesEpics, pages } from './modules/pages';
+import { componentsEpics, components } from './modules/components';
 
 // root reducer
 const rootReducer = combineReducers({
-  pages
+  components
 });
 // root epic
-const rootEpic = combineEpics(pagesEpics);
+const rootEpic = combineEpics(componentsEpics);
 
 // initialState
 const initialState = fromJS();

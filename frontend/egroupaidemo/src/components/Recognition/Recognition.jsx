@@ -58,7 +58,7 @@ const threadsOptions = [
   { key: 't6', text: '6', value: 6 }
 ];
 
-class Home extends Component {
+class Recognition extends Component {
   static propTypes = {
     isStarted: PropTypes.bool.isRequired,
     setResult: PropTypes.func.isRequired,
@@ -418,4 +418,4 @@ class Home extends Component {
   }
 }
 
-export default compose(withnprogress)(Home);
+export default compose(withnprogress)(Recognition);

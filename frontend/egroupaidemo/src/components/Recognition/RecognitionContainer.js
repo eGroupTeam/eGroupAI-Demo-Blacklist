@@ -1,11 +1,11 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getIsStarted, getResult } from 'redux/modules/pages/Home/selectors';
+import { getIsStarted, getResult } from 'redux/modules/components/Recognition/selectors';
 
 import actionCreators from 'redux/modules/actionCreators';
 
-import Home from './Home';
+import Recognition from './Recognition';
 
 const mapStateToProps = state => ({
   isStarted: getIsStarted(state),
@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      ...actionCreators.pages.home
+      ...actionCreators.components.recognition
     },
     dispatch
   );
@@ -23,4 +23,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home);
+)(Recognition);

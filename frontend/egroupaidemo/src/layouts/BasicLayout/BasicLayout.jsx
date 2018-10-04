@@ -6,7 +6,7 @@ import { NavLink, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { Responsive, Icon, Menu, Sidebar, Ref } from 'semantic-ui-react';
 
-import { Home, White, Black, Train } from 'loadables';
+import { Recognition, WhiteList, BlackList, Train } from 'loadables';
 
 import Logo from 'components/Logo';
 import RightMenu from 'components/RightMenu';
@@ -18,7 +18,7 @@ const leftItems = [
     key: 'left1',
     as: NavLink,
     name: '辨識',
-    to: '/',
+    to: '/recognition',
     icon: 'user',
     exact: true,
     link: false
@@ -27,7 +27,7 @@ const leftItems = [
     key: 'left2',
     as: NavLink,
     name: '白名單',
-    to: '/white',
+    to: '/whitelist',
     icon: 'list',
     link: false
   },
@@ -35,7 +35,7 @@ const leftItems = [
     key: 'left3',
     as: NavLink,
     name: '黑名單',
-    to: '/black',
+    to: '/blacklist',
     icon: 'list alternate',
     link: false
   },
@@ -59,9 +59,9 @@ const StyledRouter = styled.main`
 
 const Router = () => (
   <Switch>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/white" component={White} />
-    <Route exact path="/black" component={Black} />
+    <Route exact path="/recognition" component={Recognition} />
+    <Route exact path="/whitelist" component={WhiteList} />
+    <Route exact path="/blacklist" component={BlackList} />
     <Route exact path="/train" component={Train} />
   </Switch>
 );

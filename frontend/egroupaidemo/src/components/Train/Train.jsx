@@ -87,8 +87,8 @@ class Train extends Component {
 
   /**
    * handle black status value
-   * blackStatus = 1, white list
-   * blackStatus = 2, black list
+   * blackStatus = 1, whitelist
+   * blackStatus = 2, blacklist
    */
   handleBlackStatus = (e, { checked }) => {
     this.props.toggleBlackStatus(checked ? 2 : 1);

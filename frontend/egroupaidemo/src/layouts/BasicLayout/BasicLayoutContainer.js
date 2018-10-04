@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { getResult } from 'redux/modules/pages/Home/selectors';
+import { getResult } from 'redux/modules/components/Recognition/selectors';
 
 import BasicLayout from './BasicLayout';
 

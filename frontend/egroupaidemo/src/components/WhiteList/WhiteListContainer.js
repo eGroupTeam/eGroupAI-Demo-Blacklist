@@ -1,20 +1,20 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getBlackState } from 'redux/modules/pages/Black/selectors';
+import { getWhiteState } from 'redux/modules/components/WhiteList/selectors';
 
 import actionCreators from 'redux/modules/actionCreators';
 
-import Black from './Black';
+import WhiteList from './WhiteList';
 
 const mapStateToProps = state => ({
-  blackState: getBlackState(state)
+  whiteState: getWhiteState(state)
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      ...actionCreators.pages.black
+      ...actionCreators.components.whiteList
     },
     dispatch
   );
@@ -22,4 +22,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Black);
+)(WhiteList);

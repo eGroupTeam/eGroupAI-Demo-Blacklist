@@ -1,22 +1,22 @@
 import Loadable from 'react-loadable';
 import PageLoader from 'components/PageLoader';
 
-export const Black = Loadable({
-  loader: () => import('pages/Black'),
+export const BlackList = Loadable({
+  loader: () => import('components/BlackList'),
   loading: PageLoader
 });
 
-export const Home = Loadable({
-  loader: () => import('pages/Home'),
+export const Recognition = Loadable({
+  loader: () => import('components/Recognition'),
   loading: PageLoader
 });
 
 export const Train = Loadable({
-  loader: () => import('pages/Train'),
+  loader: () => import('components/Train'),
   loading: PageLoader
 });
 
-export const White = Loadable({
-  loader: () => import('pages/White'),
+export const WhiteList = Loadable({
+  loader: () => import('components/WhiteList'),
   loading: PageLoader
 });
