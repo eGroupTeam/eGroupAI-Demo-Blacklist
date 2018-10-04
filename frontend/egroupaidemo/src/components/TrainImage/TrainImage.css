@@ -1,0 +1,24 @@
+.Train__img {
+  position: relative;
+  cursor: pointer;
+}
+
+.Train__img.Train__img--selected::after {
+  opacity: 1;
+}
+
+.Train__img:hover::after {
+  opacity: 1;
+}
+
+.Train__img::after {
+  content: '';
+  position: absolute;
+  transition: all 0.4s;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
