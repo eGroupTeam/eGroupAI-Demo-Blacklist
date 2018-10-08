@@ -22,12 +22,12 @@ export default function withControlStreaming(WrappedComponent) {
     openWebSocket = () => {
       // link websocket
       if ('WebSocket' in window) {
-        this.websocket = new WebSocket('ws://10.211.55.3:8080/websocket/engine/1');
+        window.websocket = new WebSocket('ws://10.211.55.3:8080/websocket/engine/1');
       } else {
         alert('Not support websocket');
       }
       // toggle open ui state
-      this.websocket.onopen = event => {
+      window.websocket.onopen = event => {
         console.log('websocket opened');
         const {
           threshold,
@@ -38,7 +38,7 @@ export default function withControlStreaming(WrappedComponent) {
           threads
         } = this.props;
   
-        this.websocket.send(
+        window.websocket.send(
           JSON.stringify({
             threshold,
             resolution,
@@ -52,13 +52,13 @@ export default function withControlStreaming(WrappedComponent) {
       };
 
       // toggle close ui state
-      this.websocket.onclose = () => {
+      window.websocket.onclose = () => {
         console.log('websocket closed');
         this.props.toggleRecognize();
       };
       
       // set recognized result
-      this.websocket.onmessage = event => {
+      window.websocket.onmessage = event => {
         let list = List(JSON.parse(event.data));
         list = list.map(value => {
           return {
@@ -71,18 +71,18 @@ export default function withControlStreaming(WrappedComponent) {
       };
 
       // on error
-      this.websocket.onerror = (error) => {
+      window.websocket.onerror = (error) => {
         console.log(error);
       };
   
       // 監聽窗口關閉事件，當窗口關閉時，主動去關閉websocket連接，防止連接還沒斷開就關閉窗口，server端會拋異常。
       window.onbeforeunload = () => {
-        this.websocket.close();
+        window.websocket.close();
       };
     };
   
     closeWebSocket = () => {
-      this.websocket.close();
+      window.websocket.close();
     };
   
     /**
