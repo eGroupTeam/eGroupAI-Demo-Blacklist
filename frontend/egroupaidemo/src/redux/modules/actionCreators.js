@@ -5,6 +5,10 @@ const actionMap = {
     TOGGLE_RECOGNIZE: undefined,
     SET_RESULT: undefined
   },
+  WELCOME: {
+    TOGGLE_RECOGNIZE: undefined,
+    SET_RESULT: undefined
+  },
   WHITE_LIST: {
     FETCH_GET_BLACK_WHITE: undefined,
     FETCH_GET_BLACK_WHITE_REQUEST: undefined,
@@ -41,7 +45,7 @@ const actionMap = {
   ENGINE_SETTINGS: {
     HANDLE_CHANGE: undefined,
     HANDLE_TOGGLE_SETTINGS: undefined,
-  }
+  },
 };
 
 export default createActions(actionMap);

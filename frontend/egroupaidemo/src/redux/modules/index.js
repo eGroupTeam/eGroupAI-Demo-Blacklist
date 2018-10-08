@@ -2,6 +2,7 @@ import { combineReducers } from 'redux-immutable';
 import { combineEpics } from 'redux-observable';
 
 import Recognition from './Recognition';
+import Welcome from './Welcome';
 import BlackList from './BlackList';
 import BlackListEpics from './BlackList/epics';
 import WhiteList from './WhiteList';
@@ -14,6 +15,7 @@ export const rootEpic = combineEpics(TrainEpics, BlackListEpics, WhiteListEpics)
 
 export const rootReducer = combineReducers({
   Recognition,
+  Welcome,
   Train,
   BlackList,
   WhiteList,

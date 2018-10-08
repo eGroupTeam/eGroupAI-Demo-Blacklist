@@ -1,9 +1,24 @@
 import _omit from 'lodash/omit';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { List } from 'immutable';
 
 export default function withControlStreaming(WrappedComponent) {
   return class Wrapper extends Component {
+    static propTypes = {
+      setResult: PropTypes.func.isRequired,
+      toggleRecognize: PropTypes.func.isRequired,
+  
+      threshold: PropTypes.number.isRequired,
+      resolution: PropTypes.string.isRequired,
+      cam: PropTypes.number.isRequired,
+      minimumFaceSize: PropTypes.number.isRequired,
+      isHideMainWindow: PropTypes.bool.isRequired,
+      threads: PropTypes.number.isRequired,
+  
+      videoWidth: PropTypes.number.isRequired,
+      videoHeight: PropTypes.number.isRequired,
+    };
 
     state = {}
 

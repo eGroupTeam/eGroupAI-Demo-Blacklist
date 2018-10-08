@@ -22,18 +22,7 @@ import EngineSettings from 'components/EngineSettings';
 class Recognition extends Component {
   static propTypes = {
     isStarted: PropTypes.bool.isRequired,
-    setResult: PropTypes.func.isRequired,
     result: ImmutablePropTypes.list.isRequired,
-
-    threshold: PropTypes.number.isRequired,
-    resolution: PropTypes.string.isRequired,
-    cam: PropTypes.number.isRequired,
-    minimumFaceSize: PropTypes.number.isRequired,
-    isHideMainWindow: PropTypes.bool.isRequired,
-    threads: PropTypes.number.isRequired,
-
-    videoWidth: PropTypes.number.isRequired,
-    videoHeight: PropTypes.number.isRequired,
 
     objectUrl: PropTypes.string,
     getUserMediaError: PropTypes.string,
