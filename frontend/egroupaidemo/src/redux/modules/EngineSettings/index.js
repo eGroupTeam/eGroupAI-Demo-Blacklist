@@ -11,12 +11,13 @@ const reducer = handleActions(
     [HANDLE_CHANGE]: (state,action) =>
       merge(state, action.payload),
     [HANDLE_TOGGLE_SETTINGS]: (state) =>
-      set(state, 'openSettings', !state.openSettings),
+    state.set('openSettings', !state.get('openSettings')),
   },
   fromJS({
     threshold: 0.7,
     resolution: '720p',
     cam: 0,
+    rtspUrl: '',
     minimumFaceSize: 100,
     isHideMainWindow: true,
     threads: 2,

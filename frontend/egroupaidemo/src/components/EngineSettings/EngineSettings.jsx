@@ -46,6 +46,7 @@ export default class EngineSettings extends Component {
     threshold: PropTypes.number.isRequired,
     resolution: PropTypes.string.isRequired,
     cam: PropTypes.number.isRequired,
+    rtspUrl: PropTypes.string.isRequired,
     minimumFaceSize: PropTypes.number.isRequired,
     isHideMainWindow: PropTypes.bool.isRequired,
     threads: PropTypes.number.isRequired,
@@ -56,7 +57,6 @@ export default class EngineSettings extends Component {
     handleChange: PropTypes.func.isRequired,
     handleToggleSettings: PropTypes.func.isRequired,
   }
-
   /**
    * handle change values
    */
@@ -116,9 +116,11 @@ export default class EngineSettings extends Component {
       resolution,
       cam,
       minimumFaceSize,
+      rtspUrl,
       isHideMainWindow,
       threads,
       openSettings,
+      handleToggleSettings
     } = this.props;
     return (
       <Accordion as={Segment}>
@@ -126,7 +128,7 @@ export default class EngineSettings extends Component {
           active={openSettings}
           content="設定"
           index={0}
-          onClick={this.props.handleToggleSettings}
+          onClick={handleToggleSettings}
         />
         <Accordion.Content
           active={openSettings}
@@ -155,6 +157,13 @@ export default class EngineSettings extends Component {
                 value={cam}
                 name="cam"
                 options={camOptions}
+              />
+              <Form.Input
+                label="RTSP URL"
+                placeholder="RTSP URL"
+                onChange={this.handleValueChange}
+                value={rtspUrl}
+                name="rtspUrl"
               />
               <Form.Select
                 label="Threads"
