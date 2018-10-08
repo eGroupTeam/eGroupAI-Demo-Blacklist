@@ -8,9 +8,10 @@ export default function withControlStreaming(WrappedComponent) {
     state = {}
 
     componentDidMount = () => {
-      if (this.stream) {
+      // persist streaming while changed page
+      if (window.stream) {
         this.setState({
-          objectUrl: window.URL.createObjectURL(this.stream)
+          objectUrl: window.URL.createObjectURL(window.stream)
         });
       }
     };
@@ -19,18 +20,15 @@ export default function withControlStreaming(WrappedComponent) {
      * update recognized result live
      */
     openWebSocket = () => {
+      // link websocket
       if ('WebSocket' in window) {
         this.websocket = new WebSocket('ws://10.211.55.3:8080/websocket/engine/1');
-        console.log('link success');
       } else {
         alert('Not support websocket');
       }
-  
-      this.websocket.onerror = () => {
-        console.log('websocket has error');
-      };
-  
+      // toggle open ui state
       this.websocket.onopen = event => {
+        console.log('websocket opened');
         const {
           threshold,
           resolution,
@@ -50,10 +48,16 @@ export default function withControlStreaming(WrappedComponent) {
             threads
           })
         );
-        this.props.toggleRecognize(true);
-        this.openWebCam();
+        this.props.toggleRecognize();
       };
-  
+
+      // toggle close ui state
+      this.websocket.onclose = () => {
+        console.log('websocket closed');
+        this.props.toggleRecognize();
+      };
+      
+      // set recognized result
       this.websocket.onmessage = event => {
         let list = List(JSON.parse(event.data));
         list = list.map(value => {
@@ -65,9 +69,10 @@ export default function withControlStreaming(WrappedComponent) {
         });
         this.props.setResult(list);
       };
-  
-      this.websocket.onclose = () => {
-        console.log('websocket closed');
+
+      // on error
+      this.websocket.onerror = (error) => {
+        console.log(error);
       };
   
       // 監聽窗口關閉事件，當窗口關閉時，主動去關閉websocket連接，防止連接還沒斷開就關閉窗口，server端會拋異常。
@@ -78,8 +83,6 @@ export default function withControlStreaming(WrappedComponent) {
   
     closeWebSocket = () => {
       this.websocket.close();
-      this.props.toggleRecognize(false);
-      this.closeWebCam();
     };
   
     /**
@@ -96,10 +99,10 @@ export default function withControlStreaming(WrappedComponent) {
             }
           })
           .then(stream => {
-            this.stream = stream;
+            window.stream = stream;
             this.setState({
               getUserMediaError: undefined,
-              objectUrl: window.URL.createObjectURL(this.stream)
+              objectUrl: window.URL.createObjectURL(window.stream)
             });
           })
           .catch(error => {
@@ -111,9 +114,12 @@ export default function withControlStreaming(WrappedComponent) {
       }
     };
   
+    /**
+     * kill all webcam streaming
+     */
     closeWebCam = () => {
-      if (this.stream) {
-        this.stream.getTracks().forEach(track => {
+      if (window.stream) {
+        window.stream.getTracks().forEach(track => {
           track.stop();
         });
       }
@@ -129,12 +135,18 @@ export default function withControlStreaming(WrappedComponent) {
         'getUserMediaError',
         'openWebSocket',
         'closeWebSocket',
+        'openWebCam',
+        'closeWebCam',
       ]); 
       return <WrappedComponent
-       objectUrl={objectUrl} getUserMediaError={getUserMediaError} openWebSocket={this.openWebSocket} 
-       closeWebSocket={this.closeWebSocket}
-       {...passThroughProps}
-       />;
+        objectUrl={objectUrl}
+        getUserMediaError={getUserMediaError}
+        openWebSocket={this.openWebSocket} 
+        closeWebSocket={this.closeWebSocket}
+        openWebCam={this.openWebCam}
+        closeWebCam={this.closeWebCam}
+        {...passThroughProps}
+      />;
     }
   };
 }

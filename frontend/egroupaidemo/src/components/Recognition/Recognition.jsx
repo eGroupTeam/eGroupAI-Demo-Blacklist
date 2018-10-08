@@ -35,24 +35,32 @@ class Recognition extends Component {
     videoWidth: PropTypes.number.isRequired,
     videoHeight: PropTypes.number.isRequired,
 
-    closeWebSocket: PropTypes.func.isRequired,
-    openWebSocket: PropTypes.func.isRequired,
     objectUrl: PropTypes.string,
     getUserMediaError: PropTypes.string,
+    openWebSocket: PropTypes.func.isRequired,
+    closeWebSocket: PropTypes.func.isRequired,
+    openWebCam: PropTypes.func.isRequired,
+    closeWebCam: PropTypes.func.isRequired,
   };
 
   render() {
-    const { result, isStarted, closeWebSocket, openWebSocket, getUserMediaError, objectUrl } = this.props;
+    const { result, isStarted, closeWebSocket, openWebSocket, openWebCam, closeWebCam, getUserMediaError, objectUrl } = this.props;
     const blacklist = result.filter(value => value.blackStatus === 2);
     return (
       <Content>
         {isStarted ? (
-          <Button icon labelPosition="left" onClick={closeWebSocket}>
+          <Button icon labelPosition="left" onClick={() => {
+            closeWebSocket()
+            closeWebCam()
+          }}>
             <Icon name="stop" />
             停止
           </Button>
         ) : (
-          <Button icon labelPosition="left" onClick={openWebSocket}>
+          <Button icon labelPosition="left" onClick={() => {
+            openWebSocket()
+            openWebCam()
+          }}>
             <Icon name="play" />
             啟動
           </Button>

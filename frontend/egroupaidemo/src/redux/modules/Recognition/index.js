@@ -5,7 +5,7 @@ import { TOGGLE_RECOGNIZE, SET_RESULT } from './types';
 const reducer = handleActions(
   {
     [TOGGLE_RECOGNIZE]: (state, action) =>
-      state.set('isStarted', action.payload),
+      state.set('isStarted', !state.get('isStarted')),
     [SET_RESULT]: (state, action) => state.set('result', action.payload)
   },
   fromJS({
