@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { withnprogress } from 'utils';
+import { withnprogress, withControlStreaming } from 'utils';
 import {
   Divider,
   Button,
@@ -15,10 +15,13 @@ import {
 
 import Content from 'components/Content';
 import TrainImage from 'components/TrainImage';
+import VideoStream from 'components/VideoStream';
 
 class Train extends Component {
   static propTypes = {
     result: ImmutablePropTypes.list.isRequired,
+    objectUrl: PropTypes.string,
+    rtspURL: PropTypes.string.isRequired,
     uiState: ImmutablePropTypes.map.isRequired,
     modelTrainState: ImmutablePropTypes.map.isRequired,
     modelSwitchState: ImmutablePropTypes.map.isRequired,
@@ -31,18 +34,9 @@ class Train extends Component {
     fetchPostModelTrain: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-    this.videoRef = React.createRef();
-  }
-
   state = {
     trainName: '',
     seconds: 3
-  };
-
-  componentDidMount = () => {
-    this.videoRef.current.srcObject = window.stream;
   };
 
   /**
@@ -146,7 +140,8 @@ class Train extends Component {
   };
 
   render() {
-    const { trainName, uiState } = this.props;
+    const { trainName, uiState, rtspURL, result, objectUrl } = this.props;
+    const isUseRtsp = rtspURL !== '';
     return (
       <Content>
         <Checkbox
@@ -180,11 +175,7 @@ class Train extends Component {
           <Message info>
             <Message.Header>訓練時請將臉面向鏡頭</Message.Header>
           </Message>
-          <video
-            autoPlay
-            ref={this.videoRef}
-            style={{ backgroundColor: '#000', width: '100%', height: 'auto' }}
-          />
+          <VideoStream isUseRtsp={isUseRtsp} result={result} objectUrl={objectUrl}/>
         </div>
         {this.renderText()}
         {uiState.get('showRetrivedFaces') && (
@@ -217,4 +208,4 @@ class Train extends Component {
   }
 }
 
-export default compose(withnprogress)(Train);
+export default compose(withnprogress, withControlStreaming)(Train);

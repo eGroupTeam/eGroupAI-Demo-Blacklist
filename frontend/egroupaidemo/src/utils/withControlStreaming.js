@@ -6,8 +6,8 @@ import { List } from 'immutable';
 export default function withControlStreaming(WrappedComponent) {
   return class Wrapper extends Component {
     static propTypes = {
-      setResult: PropTypes.func.isRequired,
-      toggleRecognize: PropTypes.func.isRequired,
+      setResult: PropTypes.func,
+      toggleRecognize: PropTypes.func,
   
       threshold: PropTypes.number.isRequired,
       resolution: PropTypes.string.isRequired,

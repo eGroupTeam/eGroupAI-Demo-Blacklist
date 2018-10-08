@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { getResult } from 'redux/modules/Recognition/selectors';
+import { getEngineSettingsState } from 'redux/modules/EngineSettings/selectors';
 import {
   getUIState,
   getModelTrainState,
@@ -16,7 +17,8 @@ const mapStateToProps = state => ({
   result: getResult(state),
   uiState: getUIState(state),
   modelTrainState: getModelTrainState(state),
-  modelSwitchState: getModelSwitchState(state)
+  modelSwitchState: getModelSwitchState(state),
+  ...getEngineSettingsState(state).toJS()
 });
 
 const mapDispatchToProps = dispatch =>
