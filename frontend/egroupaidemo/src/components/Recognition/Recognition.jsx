@@ -18,6 +18,7 @@ import {
 import { withnprogress, withControlStreaming } from 'utils';
 import Content from 'components/Content';
 import EngineSettings from 'components/EngineSettings';
+import VideoStream from 'components/VideoStream';
 
 class Recognition extends Component {
   static propTypes = {
@@ -25,6 +26,7 @@ class Recognition extends Component {
     result: ImmutablePropTypes.list.isRequired,
 
     objectUrl: PropTypes.string,
+    rtspURL: PropTypes.string.isRequired,
     getUserMediaError: PropTypes.string,
     openWebSocket: PropTypes.func.isRequired,
     closeWebSocket: PropTypes.func.isRequired,
@@ -33,14 +35,16 @@ class Recognition extends Component {
   };
 
   render() {
-    const { result, isStarted, closeWebSocket, openWebSocket, openWebCam, closeWebCam, getUserMediaError, objectUrl } = this.props;
+    const { result, isStarted, closeWebSocket, openWebSocket, openWebCam, closeWebCam, getUserMediaError, rtspURL, objectUrl } = this.props;
     const blacklist = result.filter(value => value.blackStatus === 2);
+    const isUseRtsp = rtspURL !== ''
     return (
       <Content>
         {isStarted ? (
           <Button icon labelPosition="left" onClick={() => {
             closeWebSocket()
-            closeWebCam()
+            if(!isUseRtsp) closeWebCam()
+            
           }}>
             <Icon name="stop" />
             停止
@@ -48,7 +52,7 @@ class Recognition extends Component {
         ) : (
           <Button icon labelPosition="left" onClick={() => {
             openWebSocket()
-            openWebCam()
+            if(!isUseRtsp) openWebCam()
           }}>
             <Icon name="play" />
             啟動
@@ -66,15 +70,7 @@ class Recognition extends Component {
                     {getUserMediaError}
                   </Message>
                 )}
-                <video
-                  autoPlay
-                  src={objectUrl}
-                  style={{
-                    backgroundColor: '#000',
-                    width: '100%',
-                    height: 'auto'
-                  }}
-                />
+                <VideoStream isUseRtsp={isUseRtsp} result={result} objectUrl={objectUrl}/>
               </Segment>
               {blacklist.size !== 0 && (
                 <React.Fragment>

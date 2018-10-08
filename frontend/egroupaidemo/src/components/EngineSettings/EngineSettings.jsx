@@ -46,7 +46,7 @@ export default class EngineSettings extends Component {
     threshold: PropTypes.number.isRequired,
     resolution: PropTypes.string.isRequired,
     cam: PropTypes.number.isRequired,
-    rtspUrl: PropTypes.string.isRequired,
+    rtspURL: PropTypes.string.isRequired,
     minimumFaceSize: PropTypes.number.isRequired,
     isHideMainWindow: PropTypes.bool.isRequired,
     threads: PropTypes.number.isRequired,
@@ -116,7 +116,7 @@ export default class EngineSettings extends Component {
       resolution,
       cam,
       minimumFaceSize,
-      rtspUrl,
+      rtspURL,
       isHideMainWindow,
       threads,
       openSettings,
@@ -162,8 +162,8 @@ export default class EngineSettings extends Component {
                 label="RTSP URL"
                 placeholder="RTSP URL"
                 onChange={this.handleValueChange}
-                value={rtspUrl}
-                name="rtspUrl"
+                value={rtspURL}
+                name="rtspURL"
               />
               <Form.Select
                 label="Threads"

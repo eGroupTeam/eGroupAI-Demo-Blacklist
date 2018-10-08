@@ -17,7 +17,7 @@ const reducer = handleActions(
     threshold: 0.7,
     resolution: '720p',
     cam: 0,
-    rtspUrl: '',
+    rtspURL: '',
     minimumFaceSize: 100,
     isHideMainWindow: true,
     threads: 2,

@@ -12,6 +12,7 @@ export default function withControlStreaming(WrappedComponent) {
       threshold: PropTypes.number.isRequired,
       resolution: PropTypes.string.isRequired,
       cam: PropTypes.number.isRequired,
+      rtspURL: PropTypes.string.isRequired,
       minimumFaceSize: PropTypes.number.isRequired,
       isHideMainWindow: PropTypes.bool.isRequired,
       threads: PropTypes.number.isRequired,
@@ -48,19 +49,31 @@ export default function withControlStreaming(WrappedComponent) {
           threshold,
           resolution,
           cam,
+          rtspURL,
           minimumFaceSize,
           isHideMainWindow,
           threads
         } = this.props;
+
+        let inputSource = {
+          cam
+        }
+
+        // use ip cam
+        if (rtspURL !== '') {
+          inputSource = {
+            rtspURL
+          }
+        }
   
         window.websocket.send(
           JSON.stringify({
             threshold,
             resolution,
-            cam,
             minimumFaceSize,
             isHideMainWindow,
-            threads
+            threads,
+            ...inputSource
           })
         );
         this.props.toggleRecognize();
