@@ -60,7 +60,7 @@ export default class EngineSettings extends Component {
   /**
    * handle change values
    */
-  handleChange = (e, { name, value, checked }) => {
+  handleValueChange = (e, { name, value, checked }) => {
     if (!value) return
     if (name === 'resolution') {
       let videoWidth = 1280;
@@ -92,15 +92,22 @@ export default class EngineSettings extends Component {
           break;
       }
       this.props.handleChange({
-        [name]: value || checked,
         videoWidth,
         videoHeight
       })
-    } else {
-      this.props.handleChange({
-        [name]: value || checked,
-      })
     }
+    this.props.handleChange({
+      [name]: value,
+    })
+  };
+
+  /**
+   * handle change checked
+   */
+  handleCheckedChange = (e, { name, value, checked }) => {
+    this.props.handleChange({
+      [name]: checked,
+    })
   };
 
   render() {
@@ -128,7 +135,7 @@ export default class EngineSettings extends Component {
               <Form.Select
                 label="Threshold"
                 placeholder="Threshold"
-                onChange={this.handleChange}
+                onChange={this.handleValueChange}
                 value={threshold}
                 name="threshold"
                 options={thresholdOptions}
@@ -136,7 +143,7 @@ export default class EngineSettings extends Component {
               <Form.Select
                 label="Resolution"
                 placeholder="Resolution"
-                onChange={this.handleChange}
+                onChange={this.handleValueChange}
                 value={resolution}
                 name="resolution"
                 options={resolutionOptions}
@@ -144,7 +151,7 @@ export default class EngineSettings extends Component {
               <Form.Select
                 label="Cam"
                 placeholder="Cam"
-                onChange={this.handleChange}
+                onChange={this.handleValueChange}
                 value={cam}
                 name="cam"
                 options={camOptions}
@@ -152,7 +159,7 @@ export default class EngineSettings extends Component {
               <Form.Select
                 label="Threads"
                 placeholder="Threads"
-                onChange={this.handleChange}
+                onChange={this.handleValueChange}
                 value={threads}
                 name="threads"
                 options={threadsOptions}
@@ -160,13 +167,16 @@ export default class EngineSettings extends Component {
               <Form.Input
                 label="Minimum Face Size"
                 placeholder="Minimum Face Size"
-                onChange={this.handleChange}
+                onChange={(e, { name, value }) => {
+                  this.handleValueChange(e, { name
+                    , value: parseInt(value, 10) })
+                }}
                 value={minimumFaceSize}
                 name="minimumFaceSize"
               />
               <Form.Checkbox
                 label="Hide Main Window"
-                onChange={this.handleChange}
+                onChange={this.handleCheckedChange}
                 checked={isHideMainWindow}
                 name="isHideMainWindow"
               />
