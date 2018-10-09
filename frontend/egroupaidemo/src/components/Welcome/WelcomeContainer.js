@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getIsStarted, getResult } from 'redux/modules/Welcome/selectors';
+import { getUIState, getModelTrainState, getModelSwitchState } from 'redux/modules/Welcome/selectors';
 import { getEngineSettingsState } from 'redux/modules/EngineSettings/selectors';
 
 import actionCreators from 'redux/modules/actionCreators';
@@ -9,8 +9,9 @@ import actionCreators from 'redux/modules/actionCreators';
 import Welcome from './Welcome';
 
 const mapStateToProps = state => ({
-  isStarted: getIsStarted(state),
-  result: getResult(state),
+  uiState: getUIState(state),
+  modelTrainState: getModelTrainState(state),
+  modelSwitchState: getModelSwitchState(state),
   ...getEngineSettingsState(state).toJS()
 });
 

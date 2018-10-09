@@ -1,4 +1,7 @@
-export const getIsStarted = state =>
-  state.getIn(['Welcome', 'isStarted']);
+export const getUIState = state => state.getIn(['Welcome', 'ui']);
 
-export const getResult = state => state.getIn(['Welcome', 'result']);
+export const getModelTrainState = state =>
+  state.getIn(['Welcome', 'modelTrain']);
+
+export const getModelSwitchState = state =>
+  state.getIn(['Welcome', 'modelSwitch']);
