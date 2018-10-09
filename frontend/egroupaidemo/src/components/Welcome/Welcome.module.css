@@ -1,0 +1,41 @@
+.root {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #1b679e;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 150px;
+  margin-bottom: 20px;
+}
+
+/* we need use !important here because react semantic ui can't overwrite default ui css */
+/* TODO: need remove !important*/
+.close {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  opacity: 0.6 !important;
+  transition: opacity 0.6s;
+  cursor: pointer;
+}
+
+/* we need use !important here because react semantic ui can't overwrite default ui css */
+/* TODO: need remove !important*/
+.close:hover {
+  opacity: 1 !important;
+}
+
+.time {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  font-size: 24px;
+}

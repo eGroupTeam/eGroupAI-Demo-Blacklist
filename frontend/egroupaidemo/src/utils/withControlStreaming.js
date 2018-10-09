@@ -35,7 +35,8 @@ export default function withControlStreaming(WrappedComponent) {
     /**
      * update recognized result live
      */
-    openWebSocket = ({onopen, onclose, onmessage, onerror}) => {
+    openWebSocket = (config) => {
+      let {onopen, onclose, onmessage, onerror} = config || {}
       // link websocket
       if ('WebSocket' in window) {
         window.websocket = new WebSocket('ws://10.211.55.3:8080/websocket/engine/1');

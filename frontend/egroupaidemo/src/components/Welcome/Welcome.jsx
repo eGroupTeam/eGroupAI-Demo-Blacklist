@@ -10,6 +10,8 @@ import Content from 'components/Content';
 import EngineSettings from 'components/EngineSettings';
 import { withControlStreaming } from 'utils';
 
+import * as styles from './Welcome.module.css'
+
 class Welcome extends Component {
   static propTypes = {
     threshold: PropTypes.number.isRequired,
@@ -28,22 +30,25 @@ class Welcome extends Component {
     const { isStarted, closeWebSocket, openWebSocket } = this.props
     return (
       <Content>
-        {isStarted ? (
-          <Button icon labelPosition="left" onClick={() => {
-            closeWebSocket()
-          }}>
-            <Icon name="stop" />
-            停止
-          </Button>
-        ) : (
-          <Button icon labelPosition="left" onClick={() => {
-            openWebSocket()
-          }}>
-            <Icon name="play" />
-            啟動
-          </Button>
-        )}
+        <label htmlFor="file" className="ui primary button" role='button'>上傳訓練檔案</label>
+        <input type="file" name="imageList" id="file" style={{display:'none'}} multiple/>
+        <Button icon labelPosition="left" onClick={() => {
+          openWebSocket()
+        }}>
+          <Icon name="play" />
+          啟動
+        </Button>
         <EngineSettings />
+        {
+          isStarted && 
+            <div className={styles.root}>
+              <p className={styles.title}>李彥欣，午安</p>
+              <Icon name="window close outline" size='big' className={styles.close} onClick={() => {
+            closeWebSocket()
+          }}/>
+              <span className={styles.time}>辨識時間：2018-10-11 AM 1.30 </span>
+            </div>
+        }
       </Content>
     )
   }
