@@ -43,16 +43,16 @@ class Recognition extends Component {
         {isStarted ? (
           <Button icon labelPosition="left" onClick={() => {
             closeWebSocket()
-            if(!isUseRtsp) closeWebCam()
-            
           }}>
             <Icon name="stop" />
             停止
           </Button>
         ) : (
           <Button icon labelPosition="left" onClick={() => {
-            openWebSocket()
-            if(!isUseRtsp) openWebCam()
+            openWebSocket({
+              onopen: isUseRtsp ? undefined : openWebCam,
+              onclose: isUseRtsp ? undefined : closeWebCam
+            })
           }}>
             <Icon name="play" />
             啟動

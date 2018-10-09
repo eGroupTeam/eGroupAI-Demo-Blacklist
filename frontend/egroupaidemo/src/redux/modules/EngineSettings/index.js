@@ -11,7 +11,7 @@ const reducer = handleActions(
     [HANDLE_CHANGE]: (state,action) =>
       merge(state, action.payload),
     [HANDLE_TOGGLE_SETTINGS]: (state) =>
-    state.set('openSettings', !state.get('openSettings')),
+      set(state, 'openSettings', !state.get('openSettings')),
   },
   fromJS({
     threshold: 0.7,

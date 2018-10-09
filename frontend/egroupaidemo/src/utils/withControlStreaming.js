@@ -35,7 +35,7 @@ export default function withControlStreaming(WrappedComponent) {
     /**
      * update recognized result live
      */
-    openWebSocket = () => {
+    openWebSocket = ({onopen, onclose, onmessage, onerror}) => {
       // link websocket
       if ('WebSocket' in window) {
         window.websocket = new WebSocket('ws://10.211.55.3:8080/websocket/engine/1');
@@ -77,12 +77,14 @@ export default function withControlStreaming(WrappedComponent) {
           })
         );
         this.props.toggleRecognize();
+        onopen && onopen(event)
       };
 
       // toggle close ui state
       window.websocket.onclose = () => {
         console.log('websocket closed');
         this.props.toggleRecognize();
+        onclose && onclose()
       };
       
       // set recognized result
@@ -96,11 +98,13 @@ export default function withControlStreaming(WrappedComponent) {
           };
         });
         this.props.setResult(list);
+        onmessage && onmessage(event)
       };
 
       // on error
       window.websocket.onerror = (error) => {
         console.log(error);
+        onerror && onerror(error)
       };
   
       // 監聽窗口關閉事件，當窗口關閉時，主動去關閉websocket連接，防止連接還沒斷開就關閉窗口，server端會拋異常。
@@ -146,6 +150,7 @@ export default function withControlStreaming(WrappedComponent) {
      * kill all webcam streaming
      */
     closeWebCam = () => {
+      console.log(window.stream)
       if (window.stream) {
         window.stream.getTracks().forEach(track => {
           track.stop();
