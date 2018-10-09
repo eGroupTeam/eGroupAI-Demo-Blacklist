@@ -2,12 +2,12 @@ package com.egroupai.engine.controller.rest;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,15 +22,12 @@ import com.egroup.util.AttributeCheck;
 import com.egroup.util.CopyUtil;
 import com.egroup.util.TxtUtil;
 import com.egroup.util.UUIDGenerator;
-import com.egroup.util.YamlUtil;
 import com.egroup.util.entity.WebResponse;
 import com.egroupai.engine.control.EngineFunc;
 import com.egroupai.engine.entity.ModelMerge;
 import com.egroupai.engine.entity.ModelSwitch;
 import com.egroupai.engine.entity.TrainFace;
 import com.egroupai.engine.scenario.entity.BlackWhiteResult;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 /** 
 * @author 作者 Daniel
@@ -60,6 +57,7 @@ public class ModelRestController extends BaseController{
 	 * 3.String scenarioType
 	 * 4.Integer blackStauts
 	 * 5.String personId
+	 * 6.boolean uploadFace
 	 * @param trainFace
 	 * @param request
 	 * @param response
@@ -79,10 +77,17 @@ public class ModelRestController extends BaseController{
 			System.out.println("trainFace.getImagePathList()="+trainFace.getImagePathList().size());
 			if(attributeCheck.listNotNull_Zero(trainFace.getImagePathList())){
 				// init variable
+				String outputFacePath = "";
+				if(trainFace.isUploadFace()){
+					final HttpSession session = request.getSession();
+					outputFacePath = session.getServletContext().getRealPath("/resources/upload/face");
+				}else{
+					outputFacePath = INITIALIZATION.getOutputFace();
+				}				
 				File file = null;
 				boolean flag = true;
 				for(int i=0;i<trainFace.getImagePathList().size();i++){
-					file = new File(INITIALIZATION.getOutputFace() +"\\"+ trainFace.getImagePathList().get(i));
+					file = new File(outputFacePath +"\\"+ trainFace.getImagePathList().get(i));
 					if(!file.exists()){			
 						flag = false;
 						break;
@@ -111,7 +116,7 @@ public class ModelRestController extends BaseController{
 					// Create trainListPath Txt
 					final List<String> dataList = new ArrayList<>();	
 					for(int i =0;i<trainFace.getImagePathList().size();i++){
-						dataList.add(INITIALIZATION.getOutputFace() +"\\"+ trainFace.getImagePathList().get(i)+"	"+trainFace.getPersonId()+"[No]"+i);
+						dataList.add(outputFacePath +"\\"+ trainFace.getImagePathList().get(i)+"	"+trainFace.getPersonId()+"[No]"+i);
 					}					
 					txtUtil.create(trainFace.getTrainListPath(), dataList);		
 					
