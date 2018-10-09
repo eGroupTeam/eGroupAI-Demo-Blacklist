@@ -57,7 +57,7 @@
       "git add"
     ]
   },
-  "proxy": "http://10.211.55.3:8080/api",
+  "proxy": "http://localhost:8080/api",
   "browserslist": {
     "development": [
       "last 2 chrome versions",

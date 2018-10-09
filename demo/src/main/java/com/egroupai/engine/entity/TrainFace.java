@@ -27,6 +27,7 @@ public class TrainFace extends EngineFunc{
 	private String imagePathJson;
 	private String trainName;
 	private Integer scenarioType;
+	private boolean uploadFace = false;
 	// blackwhite variable
 	private Integer blackStatus;
 		
@@ -122,5 +123,11 @@ public class TrainFace extends EngineFunc{
 	}
 	public void setBlackStatus(Integer blackStatus) {
 		this.blackStatus = blackStatus;
+	}
+	public boolean isUploadFace() {
+		return uploadFace;
+	}
+	public void setUploadFace(boolean uploadFace) {
+		this.uploadFace = uploadFace;
 	}	
 }

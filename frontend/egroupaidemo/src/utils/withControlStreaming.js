@@ -38,7 +38,7 @@ export default function withControlStreaming(WrappedComponent) {
     openWebSocket = ({onopen, onclose, onmessage, onerror}) => {
       // link websocket
       if ('WebSocket' in window) {
-        window.websocket = new WebSocket('ws://10.211.55.3:8080/websocket/engine/1');
+        window.websocket = new WebSocket('ws://localhost:8080/websocket/engine/1');
       } else {
         alert('Not support websocket');
       }
