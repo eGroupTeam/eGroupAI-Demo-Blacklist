@@ -48,7 +48,7 @@ class Train extends Component {
       if (uiState.get('retrivedFaces').size < 10) {
         this.props.concatRetrivedFaces(this.props.result);
       } else {
-        // stop retrive faces and next step is training so we need pass the name
+        // stop retrive faces and next step we may need traning if user use auto train so we pass trainName
         this.props.stopRetriveFaces(this.state.trainName);
       }
     }
