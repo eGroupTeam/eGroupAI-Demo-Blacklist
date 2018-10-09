@@ -5,6 +5,7 @@ import {
   Button,
   Icon,
 } from 'semantic-ui-react';
+import axios from 'axios'
 
 import Content from 'components/Content';
 import EngineSettings from 'components/EngineSettings';
@@ -26,12 +27,38 @@ class Welcome extends Component {
     closeWebSocket: PropTypes.func.isRequired,
   }
 
+  state = {
+    disabled: true
+  }
+
+  handleChange = e => {
+    const formData = new FormData();
+    formData.set('file', [...e.target.files]);
+    axios.post('/api/face/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(() => {
+      this.setState({
+        disabled: false,
+      })
+    });
+  };
+
+  handleStartTrain() {
+
+  }
+
   render() {
+    const { disabled } = this.state
     const { isStarted, closeWebSocket, openWebSocket } = this.props
     return (
       <Content>
         <label htmlFor="file" className="ui primary button" role='button'>上傳訓練檔案</label>
-        <input type="file" name="imageList" id="file" style={{display:'none'}} multiple/>
+        <input type="file" name="imageList" id="file" style={{display:'none'}} multiple onChange={function() {
+          
+        }}/>
+        <Button onClick={this.handleStartTrain} disabled={disabled}>開始訓練</Button>
         <Button icon labelPosition="left" onClick={() => {
           openWebSocket()
         }}>
