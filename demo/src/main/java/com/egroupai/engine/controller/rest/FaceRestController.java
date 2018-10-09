@@ -36,9 +36,9 @@ import com.google.gson.Gson;
 * @description:
 */
 
-@Path("/photo")
+@Path("/face")
 @Controller
-public class PhotoRestController {	
+public class FaceRestController {	
 	
 	@POST
     @Path("/upload")
