@@ -44,7 +44,6 @@ export default function withControlStreaming(WrappedComponent) {
       }
       // toggle open ui state
       window.websocket.onopen = event => {
-        console.log('websocket opened');
         const {
           threshold,
           resolution,
@@ -82,7 +81,6 @@ export default function withControlStreaming(WrappedComponent) {
 
       // toggle close ui state
       window.websocket.onclose = () => {
-        console.log('websocket closed');
         this.props.toggleRecognize();
         onclose && onclose()
       };
@@ -103,7 +101,6 @@ export default function withControlStreaming(WrappedComponent) {
 
       // on error
       window.websocket.onerror = (error) => {
-        console.log(error);
         onerror && onerror(error)
       };
   
@@ -150,7 +147,6 @@ export default function withControlStreaming(WrappedComponent) {
      * kill all webcam streaming
      */
     closeWebCam = () => {
-      console.log(window.stream)
       if (window.stream) {
         window.stream.getTracks().forEach(track => {
           track.stop();
