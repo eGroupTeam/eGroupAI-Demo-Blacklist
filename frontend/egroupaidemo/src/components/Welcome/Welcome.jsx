@@ -37,16 +37,16 @@ class Welcome extends Component {
     disabled: true
   }
 
+  constructor(props) {
+    super(props);
+    this.formRef = React.createRef();
+  }
+
   /**
    * upload person images
    */
   handleUpload = e => {
-    const formData = new FormData();
-    
-    for (let index = 0; index < e.target.files.length; index++) {
-      const file = e.target.files[index];
-      formData.set(`file[${index}]`, file);
-    }
+    const formData = new FormData(this.formRef.current);
     
     this.setState({
       disabled: true,
@@ -84,8 +84,10 @@ class Welcome extends Component {
     const { uiState, closeWebSocket, openWebSocket } = this.props
     return (
       <Content>
-        <label htmlFor="file" className="ui primary button" role='button'>上傳訓練檔案</label>
-        <input type="file" name="imageList" id="file" style={{display:'none'}} multiple onChange={this.handleUpload}/>
+        <form id="uploadForm" ref={this.formRef}>
+          <label htmlFor="file" className="ui primary button" role='button'>上傳訓練檔案</label>
+          <input type="file" name="file" id="file" style={{display:'none'}} multiple onChange={this.handleUpload}/>
+        </form>
         <Input
           placeholder="姓名"
           onChange={this.handleChange}
