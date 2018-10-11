@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { Button, Icon, Input, Transition } from 'semantic-ui-react';
+import { Button, Icon, Input, Transition, Select } from 'semantic-ui-react';
 import axios from 'axios';
 import moment from 'moment';
 import Content from 'components/Content';
@@ -10,6 +10,15 @@ import EngineSettings from 'components/EngineSettings';
 import { withControlStreaming, getGreetingTime } from 'utils';
 
 import * as styles from './Welcome.module.css';
+
+const nameOptions = [
+  { key: 'Hiro', text: '社長 Hiro san', value: '社長 Hiro san' },
+  { key: 'Son', text: '工程部長 小松', value: '工程部長 小松' },
+  { key: 'James', text: 'James', value: 'James' },
+  { key: 'Daniel', text: 'Daniel', value: 'Daniel' },
+  { key: 'Jerry', text: 'Jerry', value: 'Jerry' },
+  { key: 'Leonard', text: 'Leonard', value: 'Leonard' },
+];
 
 class Welcome extends Component {
   static propTypes = {
@@ -138,6 +147,14 @@ class Welcome extends Component {
           value={trainName}
           name="trainName"
         />
+        <Select
+          placeholder="姓名"
+          onChange={this.handleChange}
+          value={trainName}
+          name="trainName"
+          options={nameOptions}
+          style={{ marginLeft: '.25em' }}
+        />
         <Button
           onClick={this.handleStartTrain}
           disabled={disabled}
@@ -166,8 +183,8 @@ class Welcome extends Component {
                   </div>
                 ) : (
                   <div className={fadeIn ? styles.fadeIn : styles.fadeOut}>
-                    <p className={styles.title}>{getGreetingTime()}</p>
                     <p className={styles.title}>{result.personName}</p>
+                    <p className={styles.subtitle}>{getGreetingTime()}</p>
                   </div>
                 )}
               </div>
