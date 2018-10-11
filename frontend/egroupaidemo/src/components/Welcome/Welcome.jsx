@@ -21,7 +21,6 @@ class Welcome extends Component {
   static propTypes = {
     uiState: ImmutablePropTypes.map.isRequired,
     modelTrainState: ImmutablePropTypes.map.isRequired,
-    modelSwitchState: ImmutablePropTypes.map.isRequired,
 
     threshold: PropTypes.number.isRequired,
     resolution: PropTypes.string.isRequired,

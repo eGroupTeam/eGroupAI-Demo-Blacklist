@@ -12,12 +12,7 @@ const actionMap = {
     FETCH_POST_MODEL_TRAIN: undefined,
     FETCH_POST_MODEL_TRAIN_REQUEST: undefined,
     FETCH_POST_MODEL_TRAIN_SUCCESS: undefined,
-    FETCH_POST_MODEL_TRAIN_FAILURE: undefined,
-
-    FETCH_POST_MODEL_SWITCH: undefined,
-    FETCH_POST_MODEL_SWITCH_REQUEST: undefined,
-    FETCH_POST_MODEL_SWITCH_SUCCESS: undefined,
-    FETCH_POST_MODEL_SWITCH_FAILURE: undefined
+    FETCH_POST_MODEL_TRAIN_FAILURE: undefined
   },
   WHITE_LIST: {
     FETCH_GET_BLACK_WHITE: undefined,
