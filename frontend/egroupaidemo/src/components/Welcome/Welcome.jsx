@@ -105,13 +105,13 @@ class Welcome extends Component {
           {/* we need wrap div here because Transition component will replace the css display property with block */}
           <div>
             <div className={styles.root}>
-              <div className={styles.title}>
-                {result.personName === '查無此人' ?
-                  'Welcome TMF Earth' :
-                  <React.Fragment>
-                    <p>{getGreetingTime()}</p>
-                    <p>{result.personName}</p>
-                  </React.Fragment>}
+              <div>
+              {result.personName === '查無此人' ?
+                <p className={styles.title}>Welcome TMF Earth</p> :
+                <React.Fragment>
+                  <p className={styles.title}>{getGreetingTime()}</p>
+                  <p className={styles.title}>{result.personName}</p>
+                </React.Fragment>}
               </div>
               <Icon name="window close outline" size='big' className={styles.close} onClick={closeWebSocket}/>
               <span className={styles.time}>Recognized Time：{moment(result.systemTime).format(
