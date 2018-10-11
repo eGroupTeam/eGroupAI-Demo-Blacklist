@@ -23,6 +23,11 @@ export default function withControlStreaming(WrappedComponent) {
 
     state = {}
 
+    constructor(props) {
+      super(props)
+      this.engineStarted = false
+    }
+
     componentDidMount = () => {
       // persist streaming while changed page
       if (window.stream) {
@@ -36,7 +41,7 @@ export default function withControlStreaming(WrappedComponent) {
      * update recognized result live
      */
     openWebSocket = (config) => {
-      let {onopen, onclose, onmessage, onerror} = config || {}
+      let {onopen, onclose, onEngineStarted, onmessage, onerror} = config || {}
       // link websocket
       if ('WebSocket' in window) {
         window.websocket = new WebSocket('ws://10.211.55.3:8080/websocket/engine/1');
@@ -97,6 +102,10 @@ export default function withControlStreaming(WrappedComponent) {
           };
         });
         this.props.setResult(list);
+        if (!this.engineStarted) {
+          this.engineStarted = true;
+          onEngineStarted && onEngineStarted(event)
+        }
         onmessage && onmessage(event)
       };
 

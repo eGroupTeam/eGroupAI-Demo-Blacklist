@@ -50,7 +50,7 @@ class Recognition extends Component {
         ) : (
           <Button icon labelPosition="left" onClick={() => {
             openWebSocket({
-              onopen: isUseRtsp ? undefined : openWebCam,
+              onEngineStarted: isUseRtsp ? undefined : openWebCam,
               onclose: isUseRtsp ? undefined : closeWebCam
             })
           }}>
