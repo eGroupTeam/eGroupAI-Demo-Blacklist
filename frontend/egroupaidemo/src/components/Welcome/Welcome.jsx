@@ -8,6 +8,7 @@ import {
   Input
 } from 'semantic-ui-react';
 import axios from 'axios'
+import moment from 'moment';
 
 import Content from 'components/Content';
 import EngineSettings from 'components/EngineSettings';
@@ -34,20 +35,19 @@ class Welcome extends Component {
 
   state = {
     trainName: '',
-    disabled: true
-  }
-
-  constructor(props) {
-    super(props);
-    this.formRef = React.createRef();
+    disabled: true,
+    data: []
   }
 
   /**
    * upload person images
    */
   handleUpload = e => {
-    const formData = new FormData(this.formRef.current);
-    
+    const formData = new FormData();
+    for (let i = 0; i < e.target.files.length; i++) {
+      const file = e.target.files[i];
+      formData.append('file', file)
+    }
     this.setState({
       disabled: true,
     })
@@ -55,9 +55,10 @@ class Welcome extends Component {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    }).then(() => {
+    }).then((response) => {
       this.setState({
         disabled: false,
+        data: response.data,
       })
     });
     e.target.value = null;
@@ -74,6 +75,7 @@ class Welcome extends Component {
       blackStatus: 1,
       // if want to train uploaded face images
       uploadFace: true,
+      imagePathList: this.state.data
     });
   };
 
@@ -82,12 +84,11 @@ class Welcome extends Component {
   render() {
     const { disabled, trainName } = this.state
     const { uiState, closeWebSocket, openWebSocket } = this.props
+    const result = uiState.get('result').last() || {}
     return (
       <Content>
-        <form id="uploadForm" ref={this.formRef}>
-          <label htmlFor="file" className="ui primary button" role='button'>上傳訓練檔案</label>
-          <input type="file" name="file" id="file" style={{display:'none'}} multiple onChange={this.handleUpload}/>
-        </form>
+        <label htmlFor="file" className="ui primary button" role='button'>上傳訓練檔案</label>
+        <input type="file" name="file" id="file" style={{display:'none'}} multiple onChange={this.handleUpload}/>
         <Input
           placeholder="姓名"
           onChange={this.handleChange}
@@ -103,9 +104,11 @@ class Welcome extends Component {
         {
           uiState.get('isStarted') && 
             <div className={styles.root}>
-              <p className={styles.title}>李彥欣，午安</p>
+              <p className={styles.title}>{result.personName}，午安</p>
               <Icon name="window close outline" size='big' className={styles.close} onClick={closeWebSocket}/>
-              <span className={styles.time}>辨識時間：2018-10-11 AM 1.30 </span>
+              <span className={styles.time}>辨識時間：{moment(result.systemTime).format(
+                                'MMM Do YY, h:mm:ss a'
+                              )} </span>
             </div>
         }
       </Content>
