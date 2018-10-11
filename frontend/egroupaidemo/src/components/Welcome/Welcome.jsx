@@ -5,14 +5,15 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import {
   Button,
   Icon,
-  Input
+  Input,
+  Transition
 } from 'semantic-ui-react';
 import axios from 'axios'
 import moment from 'moment';
 
 import Content from 'components/Content';
 import EngineSettings from 'components/EngineSettings';
-import { withControlStreaming } from 'utils';
+import { withControlStreaming, getGreetingTime } from 'utils';
 
 import * as styles from './Welcome.module.css'
 
@@ -101,16 +102,18 @@ class Welcome extends Component {
           啟動
         </Button>
         <EngineSettings />
-        {
-          uiState.get('isStarted') && 
+        <Transition visible={uiState.get('isStarted')} animation='fade' duration={500}>
+          {/* we need wrap div here because Transition component will replace the css display property with block */}
+          <div>
             <div className={styles.root}>
-              <p className={styles.title}>{result.personName}，午安</p>
+              <p className={styles.title}>{result.personName}，{getGreetingTime()}</p>
               <Icon name="window close outline" size='big' className={styles.close} onClick={closeWebSocket}/>
               <span className={styles.time}>辨識時間：{moment(result.systemTime).format(
                                 'MMM Do YY, h:mm:ss a'
                               )} </span>
             </div>
-        }
+          </div>
+        </Transition>   
       </Content>
     )
   }
