@@ -8,11 +8,11 @@ export default function getGreetingTime () {
 	const currentHour = parseFloat(moment().format("HH"));
 	
 	if(currentHour >= split_afternoon && currentHour <= split_evening) {
-		gretting = "午安";
+		gretting = "Good Afternoon";
 	} else if(currentHour >= split_evening) {
-		gretting = "晚安";
+		gretting = "Good Evening";
 	} else {
-		gretting = "早安";
+		gretting = "Good Morning";
 	}
 	
 	return gretting;

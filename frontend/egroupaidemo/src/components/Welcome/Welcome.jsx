@@ -83,7 +83,7 @@ class Welcome extends Component {
 
   render() {
     const { disabled, trainName } = this.state
-    const { uiState, closeWebSocket, openWebSocket } = this.props
+    const { uiState, modelTrainState, closeWebSocket, openWebSocket } = this.props
     const result = uiState.get('result').last() || {}
     return (
       <Content>
@@ -95,7 +95,7 @@ class Welcome extends Component {
           value={trainName}
           name="trainName"
         />
-        <Button onClick={this.handleStartTrain} disabled={disabled} style={{ marginLeft: '.25em' }}>開始訓練</Button>
+        <Button onClick={this.handleStartTrain} disabled={disabled} style={{ marginLeft: '.25em' }} loading={modelTrainState.get('isLoading')}>開始訓練</Button>
         <Button icon labelPosition="left" onClick={openWebSocket}>
           <Icon name="play" />
           啟動
@@ -105,9 +105,16 @@ class Welcome extends Component {
           {/* we need wrap div here because Transition component will replace the css display property with block */}
           <div>
             <div className={styles.root}>
-              <p className={styles.title}>{result.personName}，{getGreetingTime()}</p>
+              <div className={styles.title}>
+                {result.personName === '查無此人' ?
+                  'Welcome TMF Earth' :
+                  <React.Fragment>
+                    <p>{getGreetingTime()}</p>
+                    <p>{result.personName}</p>
+                  </React.Fragment>}
+              </div>
               <Icon name="window close outline" size='big' className={styles.close} onClick={closeWebSocket}/>
-              <span className={styles.time}>辨識時間：{moment(result.systemTime).format(
+              <span className={styles.time}>Recognized Time：{moment(result.systemTime).format(
                                 'MMM Do YY, h:mm:ss a'
                               )} </span>
             </div>

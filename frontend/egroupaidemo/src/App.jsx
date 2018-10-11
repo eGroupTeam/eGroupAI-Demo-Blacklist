@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router/immutable';
 import moment from 'moment';
-import 'moment/locale/zh-tw';
+// import 'moment/locale/zh-tw';
 
 import { store, history } from 'redux/configureStore';
 
