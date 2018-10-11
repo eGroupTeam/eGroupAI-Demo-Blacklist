@@ -6,6 +6,7 @@
 */  
 package com.egroupai.engine.websocket; 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +49,9 @@ public class EngineWebsocket extends BaseController{
     @OnOpen
     public void onOpen(Session session,@PathParam(value = "scenario") Integer scenario_type) throws IOException{
         logger.debug("open websocket");
-        init();
+        if(INITIALIZATION==null){
+            init();
+        }
         SCENARIO_TYPE = scenario_type;       
         System.out.println("open websocket,scenario_type="+scenario_type);
     }
@@ -77,13 +80,19 @@ public class EngineWebsocket extends BaseController{
     		recognition_thread = new Thread(new Runnable() {
     			@Override			
     			public void run() {
+    				if(new File(INITIALIZATION.getModelPath()+ MODEL_NEW+".binary").exists()
+    						&&new File(INITIALIZATION.getModelPath()+ MODEL_NEW+".faceInfor").exists()){
+						final String oldModel = MODEL_NOW;
+						MODEL_NOW = MODEL_NEW;
+						MODEL_NEW = oldModel;
+    				}
     				// Start the Engine
     		        System.out.println("message="+gson.toJson(message));
     		        RetrieveFace retrieveFace = gson.fromJson(message, RetrieveFace.class);
     		        retrieveFace.setOutputFacePath(INITIALIZATION.getOutputFace());
     		        retrieveFace.setOutputFramePath(INITIALIZATION.getOutputFrame());
-    		        retrieveFace.setTrainedBinaryPath(INITIALIZATION.getModelPath()+"eGroup.Model.binary");
-    		        retrieveFace.setTrainedFaceInfoPath(INITIALIZATION.getModelPath()+"eGroup.Model.faceInfor");
+    		        retrieveFace.setTrainedBinaryPath(INITIALIZATION.getModelPath()+MODEL_NOW+".binary");
+    		        retrieveFace.setTrainedFaceInfoPath(INITIALIZATION.getModelPath()+MODEL_NOW+".faceInfor");
     		        retrieveFace.setJsonPath(INITIALIZATION.getEnginePath()+"\\output");
     		        System.out.println("retrieveFace="+gson.toJson(retrieveFace));
     				engineFunc.retrieveFace(retrieveFace);

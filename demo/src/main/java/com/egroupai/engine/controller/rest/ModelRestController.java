@@ -67,6 +67,9 @@ public class ModelRestController extends BaseController{
 	@Path("/train")
 	@Consumes("application/json")
 	public Response train(TrainFace trainFace,@Context HttpServletRequest request, @Context HttpServletResponse response) {
+		if(INITIALIZATION==null){
+			init();
+		}
 		final WebResponse webResponse = new WebResponse(); 
 		// init func
 		final EngineFunc engineFunc = new EngineFunc();
