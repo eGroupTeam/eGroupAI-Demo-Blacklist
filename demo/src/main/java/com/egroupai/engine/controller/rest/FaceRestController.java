@@ -58,13 +58,16 @@ public class FaceRestController {
 		
 		// Get the file
         Map<String, List<InputPart>> uploadForm = multipartFormDataInput.getFormDataMap();
+        uploadForm.forEach((key, value) -> {
+            System.out.println("Key : " + key + " Value : " + value.toString());
+        });
         List<InputPart> inputParts = uploadForm.get("file");
         try {
             for (InputPart inputPart : inputParts) {
 	            MultivaluedMap<String, String> header = inputPart.getHeaders();
 	            fileName = getFileName(header);
 	            String fileNames[] = fileName.toLowerCase().split("\\.");
-	            if (fileNames[1].equals("jpeg")||fileNames[1].equals("jpg")||fileNames[1].equals("png")) {
+	            if (fileNames[fileNames.length-1].equals("jpeg")||fileNames[fileNames.length-1].equals("jpg")||fileNames[fileNames.length-1].equals("png")) {
 	            	// convert the uploaded file to inputstream
 	                InputStream inputStream = inputPart.getBody(InputStream.class,null);
 	                byte [] bytes = IOUtils.toByteArray(inputStream);

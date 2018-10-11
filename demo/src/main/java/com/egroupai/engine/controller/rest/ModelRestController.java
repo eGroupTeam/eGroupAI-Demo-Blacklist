@@ -87,7 +87,9 @@ public class ModelRestController extends BaseController{
 				File file = null;
 				boolean flag = true;
 				for(int i=0;i<trainFace.getImagePathList().size();i++){
+					System.out.println("outputFacePath1="+outputFacePath +"\\"+ trainFace.getImagePathList().get(i));
 					file = new File(outputFacePath +"\\"+ trainFace.getImagePathList().get(i));
+					System.out.println("outputFacePath file="+file.exists());
 					if(!file.exists()){			
 						flag = false;
 						break;
