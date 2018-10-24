@@ -285,8 +285,10 @@ public class GetResult {
 					}
 				}
 				
-				sourceJson.delete();
-				destJson.delete();
+				if(deleteJson){
+					sourceJson.delete();
+					destJson.delete();					
+				}
 			}		
 			return faceList;
 	}
