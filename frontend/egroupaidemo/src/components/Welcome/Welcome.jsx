@@ -1,21 +1,24 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { compose } from 'redux';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import {
-  Button,
-  Icon,
-  Input,
-  Transition
-} from 'semantic-ui-react';
-import axios from 'axios'
+import { Button, Icon, Input, Transition, Select } from 'semantic-ui-react';
+import axios from 'axios';
 import moment from 'moment';
-
 import Content from 'components/Content';
 import EngineSettings from 'components/EngineSettings';
 import { withControlStreaming, getGreetingTime } from 'utils';
 
-import * as styles from './Welcome.module.css'
+import * as styles from './Welcome.module.css';
+
+const nameOptions = [
+  { key: 'Hiro', text: '社長 Hiro san', value: '社長 Hiro san' },
+  { key: 'Son', text: '工程部長 小松', value: '工程部長 小松' },
+  { key: 'James', text: 'James', value: 'James' },
+  { key: 'Daniel', text: 'Daniel', value: 'Daniel' },
+  { key: 'Jerry', text: 'Jerry', value: 'Jerry' },
+  { key: 'Leonard', text: 'Leonard', value: 'Leonard' },
+];
 
 class Welcome extends Component {
   static propTypes = {
@@ -30,13 +33,42 @@ class Welcome extends Component {
     threads: PropTypes.number.isRequired,
 
     openWebSocket: PropTypes.func.isRequired,
-    closeWebSocket: PropTypes.func.isRequired,
-  }
+    closeWebSocket: PropTypes.func.isRequired
+  };
 
   state = {
     trainName: '',
     disabled: true,
-    data: []
+    data: [],
+    fadeIn: false
+  };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const isUpdatedResult = !prevProps.uiState
+      .get('result')
+      .equals(this.props.uiState.get('result'));
+    if (isUpdatedResult) {
+      const prevResult =
+        prevProps.uiState
+          .get('result')
+          .filter(el => el.personName !== '查無此人')
+          .last() || {};
+      const result =
+        this.props.uiState
+          .get('result')
+          .filter(el => el.personName !== '查無此人')
+          .last() || {};
+      if (prevResult.personName !== result.personName) {
+        this.setState({
+          fadeIn: false
+        });
+        setTimeout(() => {
+          this.setState({
+            fadeIn: true
+          });
+        }, 10);
+      }
+    }
   }
 
   /**
@@ -46,21 +78,23 @@ class Welcome extends Component {
     const formData = new FormData();
     for (let i = 0; i < e.target.files.length; i++) {
       const file = e.target.files[i];
-      formData.append('file', file)
+      formData.append('file', file);
     }
     this.setState({
-      disabled: true,
-    })
-    axios.post('/api/face/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then((response) => {
-      this.setState({
-        disabled: false,
-        data: response.data,
-      })
+      disabled: true
     });
+    axios
+      .post('/api/face/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        this.setState({
+          disabled: false,
+          data: response.data
+        });
+      });
     e.target.value = null;
   };
 
@@ -82,46 +116,93 @@ class Welcome extends Component {
   handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
   render() {
-    const { disabled, trainName } = this.state
-    const { uiState, modelTrainState, closeWebSocket, openWebSocket } = this.props
-    const result = uiState.get('result').last() || {}
+    const { disabled, trainName, fadeIn } = this.state;
+    const {
+      uiState,
+      modelTrainState,
+      closeWebSocket,
+      openWebSocket
+    } = this.props;
+    const result =
+      uiState
+        .get('result')
+        .filter(el => el.personName !== '查無此人')
+        .last() || {};
     return (
       <Content>
-        <label htmlFor="file" className="ui primary button" role='button'>上傳訓練檔案</label>
-        <input type="file" name="file" id="file" style={{display:'none'}} multiple onChange={this.handleUpload}/>
+        <label htmlFor="file" className="ui primary button" role="button">
+          上傳訓練檔案
+        </label>
+        <input
+          type="file"
+          name="file"
+          id="file"
+          style={{ display: 'none' }}
+          multiple
+          onChange={this.handleUpload}
+        />
         <Input
           placeholder="姓名"
           onChange={this.handleChange}
           value={trainName}
           name="trainName"
         />
-        <Button onClick={this.handleStartTrain} disabled={disabled} style={{ marginLeft: '.25em' }} loading={modelTrainState.get('isLoading')}>開始訓練</Button>
+        <Select
+          placeholder="姓名"
+          onChange={this.handleChange}
+          value={trainName}
+          name="trainName"
+          options={nameOptions}
+          style={{ marginLeft: '.25em' }}
+        />
+        <Button
+          onClick={this.handleStartTrain}
+          disabled={disabled}
+          style={{ marginLeft: '.25em' }}
+          loading={modelTrainState.get('isLoading')}
+        >
+          開始訓練
+        </Button>
         <Button icon labelPosition="left" onClick={openWebSocket}>
           <Icon name="play" />
           啟動
         </Button>
         <EngineSettings />
-        <Transition visible={uiState.get('isStarted')} animation='fade' duration={500}>
+        <Transition
+          visible={uiState.get('isStarted')}
+          animation="fade"
+          duration={500}
+        >
           {/* we need wrap div here because Transition component will replace the css display property with block */}
           <div>
             <div className={styles.root}>
               <div>
-              {result.personName === '查無此人' ?
-                <p className={styles.title}>Welcome TMF Earth</p> :
-                <React.Fragment>
-                  <p className={styles.title}>{getGreetingTime()}</p>
-                  <p className={styles.title}>{result.personName}</p>
-                </React.Fragment>}
+                {!result.personName ? (
+                  <div className={fadeIn ? styles.fadeIn : styles.fadeOut}>
+                    <p className={styles.title}>Welcome TMF Earth</p>
+                  </div>
+                ) : (
+                  <div className={fadeIn ? styles.fadeIn : styles.fadeOut}>
+                    <p className={styles.title}>{result.personName}</p>
+                    <p className={styles.subtitle}>{getGreetingTime()}</p>
+                  </div>
+                )}
               </div>
-              <Icon name="window close outline" size='big' className={styles.close} onClick={closeWebSocket}/>
-              <span className={styles.time}>Recognized Time：{moment(result.systemTime).format(
-                                'MMM Do YY, h:mm:ss a'
-                              )} </span>
+              <Icon
+                name="window close outline"
+                size="big"
+                className={styles.close}
+                onClick={closeWebSocket}
+              />
+              <span className={styles.time}>
+                Recognized Time：
+                {moment(result.systemTime).format('MMM Do YY, h:mm:ss a')}{' '}
+              </span>
             </div>
           </div>
-        </Transition>   
+        </Transition>
       </Content>
-    )
+    );
   }
 }
 

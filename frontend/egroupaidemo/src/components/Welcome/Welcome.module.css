@@ -14,6 +14,13 @@
 .title {
   font-size: 150px;
   margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 100px;
+  text-align: center;
 }
 
 /* we need use !important here because react semantic ui can't overwrite default ui css */
@@ -38,4 +45,30 @@
   left: 10px;
   bottom: 10px;
   font-size: 24px;
+}
+
+.fadeIn {
+  animation: fadeIn 1s;
+}
+
+.fadeOut {
+  animation: fadeOut 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
