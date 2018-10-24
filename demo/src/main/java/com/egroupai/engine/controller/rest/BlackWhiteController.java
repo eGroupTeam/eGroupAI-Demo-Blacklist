@@ -1,24 +1,16 @@
 package com.egroupai.engine.controller.rest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PATCH;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.springframework.stereotype.Controller;
 
 import com.egroup.controller.BaseController;
-import com.egroup.util.AttributeCheck;
 import com.egroup.util.entity.WebResponse;
-import com.egroupai.engine.scenario.entity.BlackWhiteResult;
 import com.google.gson.Gson;
-
-import ch.qos.logback.core.joran.conditional.IfAction;
 
 /** 
 * @author 作者 Daniel

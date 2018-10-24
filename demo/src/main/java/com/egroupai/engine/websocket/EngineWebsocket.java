@@ -138,7 +138,7 @@ public class EngineWebsocket extends BaseController{
 		try {
 			while(true) {
 				long startTime = System.currentTimeMillis();
-				faceList = getResult.getCacheResult(INITIALIZATION.getEnginePath(),cacheJsonName);
+				faceList = getResult.cacheResult(INITIALIZATION.getEnginePath(),cacheJsonName);
 				// System.out.println("Get Json Using Time:" + (System.currentTimeMillis() - startTime) + " ms,faceList="+new Gson().toJson(faceList));
 				if(attributeCheck.listNotNull_Zero(faceList)){
 					session.getBasicRemote().sendText("faceList ="+gson.toJson(faceList));
@@ -176,7 +176,7 @@ public class EngineWebsocket extends BaseController{
 			while(true) {
 				blackWhiteResultList = new ArrayList<>();
 				long startTime = System.currentTimeMillis();
-				faceList = getResult.getCacheResult(INITIALIZATION.getEnginePath(),cacheJsonName);
+				faceList = getResult.cacheResult(INITIALIZATION.getEnginePath(),cacheJsonName);
 				// System.out.println("Get Json Using Time:" + (System.currentTimeMillis() - startTime) + " ms");
 				if(attributeCheck.listNotNull_Zero(faceList)){
 					for(Face face : faceList){

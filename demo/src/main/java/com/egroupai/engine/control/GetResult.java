@@ -62,6 +62,20 @@ public class GetResult {
 //			}
 //		}
 		// Stop by yourself
+		//Get Real-time data
+//		String photoJsonName = "photo.output.cache.egroup";	// Get Real-time data
+//		while(true) {
+//			long startTime = System.currentTimeMillis();
+//			faceList = photoResult(ENGINEPATH,cacheJsonName);
+//			System.out.println("Get Json Using Time:" + (System.currentTimeMillis() - startTime) + " ms,faceList="+new Gson().toJson(faceList));
+//			// If your fps is 10, means recognize 10 frame per seconds, 1000 ms /10 frame = 100 ms
+//			try {
+//				Thread.sleep(300);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 	}
 		
 	
@@ -73,7 +87,7 @@ public class GetResult {
 	 * @param startIndex
 	 * @return
 	 */
-	public static List<Face> getAllResult(String jsonPath,String jsonName,int startIndex) {
+	public static List<Face> allResult(String jsonPath,String jsonName,int startIndex) {
 		// init func
 		final Gson gson = new Gson();
 		final CopyUtil copyUtil = new CopyUtil();
@@ -93,50 +107,46 @@ public class GetResult {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			final File jsonFile = new File(jsonFileName.toString());
 			FileReader fileReader = null;
 			BufferedReader bufferedReader = null;
 
-			// If json exists
-			if (jsonFile.exists()) {
-				try {
-					fileReader = new FileReader(jsonFileName.toString());
-				} catch (FileNotFoundException e) {
-				}
-				bufferedReader = new BufferedReader(fileReader);
-				// Read Json
-				final StringBuilder jsonContent = new StringBuilder();
-				String line;
-				try {
-					// Read line
+			try {
+				fileReader = new FileReader(jsonFileName.toString());
+			} catch (FileNotFoundException e) {
+			}
+			bufferedReader = new BufferedReader(fileReader);
+			// Read Json
+			final StringBuilder jsonContent = new StringBuilder();
+			String line;
+			try {
+				// Read line
+				line = bufferedReader.readLine();
+				while (line != null) {
+					jsonContent.append(line + "\n");
 					line = bufferedReader.readLine();
-					while (line != null) {
-						jsonContent.append(line + "\n");
-						line = bufferedReader.readLine();
-					}
-					// If has data
-					if (jsonContent.toString() != null) {
-						// Get last one object
-						int endIndex = jsonContent.lastIndexOf("}\n\t,");
-						String json;
-						// Reorganization json
-						if (endIndex != -1 && startIndex != endIndex && startIndex < endIndex) {
-							if (startIndex > 0) {
-								json = "[" + jsonContent.toString().substring(startIndex + 2, endIndex) + "}]";
-							} else {
-								json = jsonContent.toString().substring(startIndex, endIndex) + "}]";
-							}
-							System.out.println("json="+json);
-							faceList = gson.fromJson(json, faceListType);
-							faceList.get(faceList.size() - 1).setEndIndex(endIndex + 2);
+				}
+				// If has data
+				if (jsonContent.toString() != null) {
+					// Get last one object
+					int endIndex = jsonContent.lastIndexOf("}\n\t,");
+					String json;
+					// Reorganization json
+					if (endIndex != -1 && startIndex != endIndex && startIndex < endIndex) {
+						if (startIndex > 0) {
+							json = "[" + jsonContent.toString().substring(startIndex + 2, endIndex) + "}]";
+						} else {
+							json = jsonContent.toString().substring(startIndex, endIndex) + "}]";
 						}
+						System.out.println("json="+json);
+						faceList = gson.fromJson(json, faceListType);
+						faceList.get(faceList.size() - 1).setEndIndex(endIndex + 2);
 					}
+				}
+			} catch (IOException e) {
+			} finally {
+				try {
+					bufferedReader.close();
 				} catch (IOException e) {
-				} finally {
-					try {
-						bufferedReader.close();
-					} catch (IOException e) {
-					}
 				}
 			}
 		}		
@@ -151,7 +161,7 @@ public class GetResult {
 	 * @param startIndex
 	 * @return
 	 */
-	public static List<Face> getCacheResult(String jsonPath,String jsonName) {
+	public List<Face> cacheResult(String jsonPath,String jsonName) {
 		// init func
 		final Gson gson = new Gson();
 		final CopyUtil copyUtil = new CopyUtil();
@@ -172,12 +182,79 @@ public class GetResult {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			final File jsonFile = new File(jsonFileName.toString());
 			FileReader fileReader = null;
 			BufferedReader bufferedReader = null;
 
-			// If json exists
-			if (jsonFile.exists()) {
+			// init func
+			final AttributeCheck attributeCheck = new AttributeCheck();
+			try {
+				fileReader = new FileReader(jsonFileName.toString());
+			} catch (FileNotFoundException e) {
+			}
+			bufferedReader = new BufferedReader(fileReader);
+			// Read Json
+			final StringBuilder jsonContent = new StringBuilder();
+			String line;
+			try {
+				// Read line
+				line = bufferedReader.readLine();
+				while (line != null) {
+					jsonContent.append(line + "\n");
+					line = bufferedReader.readLine();
+				}
+				// If has data
+				if (attributeCheck.stringsNotNull(jsonContent.toString())) {
+					// Get last one object
+					final int endIndex = jsonContent.lastIndexOf("}\n\t,");
+					if(endIndex>0) {
+						final String json = jsonContent.toString().substring(0, endIndex) + "}]";
+						faceList = gson.fromJson(json, faceListType);			
+					}									
+				}
+			} catch (IOException e) {
+			} finally {
+				try {
+					bufferedReader.close();
+				} catch (IOException e) {
+				}
+			}
+		}		
+		return faceList;
+	}
+	
+	/**
+	 * Get Retrieve result json
+	 * @author Daniel
+	 *
+	 * @param jsonPath
+	 * @param startIndex
+	 * @return
+	 */
+	public static List<Face> photoResult(String jsonPath,String jsonName,Boolean deleteJson) {
+		// init func
+			final Gson gson = new Gson();
+			final CopyUtil copyUtil = new CopyUtil();
+
+			// init variable
+			final Type faceListType = new TypeToken<ArrayList<Face>>() {}.getType();
+			List<Face> faceList = new ArrayList<Face>();
+
+			// Get retrieve result
+			final File sourceJson = new File(jsonPath.toString() + "/"+jsonName+".json");
+			System.out.println("sourceJson="+sourceJson);
+			final StringBuilder jsonFileName = new StringBuilder(jsonPath + "/"+jsonName+"_copy.json");
+			final File destJson = new File(jsonFileName.toString());
+			if(sourceJson.exists()&&sourceJson.length()!=destJson.length()) {
+				try {
+					copyUtil.copyFile(sourceJson, destJson);
+//						sourceJson.delete();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				FileReader fileReader = null;
+				BufferedReader bufferedReader = null;
+
 				// init func
 				final AttributeCheck attributeCheck = new AttributeCheck();
 				try {
@@ -197,12 +274,8 @@ public class GetResult {
 					}
 					// If has data
 					if (attributeCheck.stringsNotNull(jsonContent.toString())) {
-						// Get last one object
-						final int endIndex = jsonContent.lastIndexOf("}\n\t,");
-						if(endIndex>0) {
-							final String json = jsonContent.toString().substring(0, endIndex) + "}]";
-							faceList = gson.fromJson(json, faceListType);			
-						}									
+						System.out.println("json="+jsonContent);
+						faceList = gson.fromJson(jsonContent.toString(), faceListType);	
 					}
 				} catch (IOException e) {
 				} finally {
@@ -211,8 +284,10 @@ public class GetResult {
 					} catch (IOException e) {
 					}
 				}
-			}
-		}		
-		return faceList;
+				
+				sourceJson.delete();
+				destJson.delete();
+			}		
+			return faceList;
 	}
 }
