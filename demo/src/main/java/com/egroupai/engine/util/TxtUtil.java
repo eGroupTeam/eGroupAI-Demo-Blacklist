@@ -40,4 +40,51 @@ public class TxtUtil {
 		System.out.println("Switch file not be created");
 		return false;
 	}
+	
+
+	
+	/**
+	 * Read the txt and return content
+	 * @author Daniel
+	 *
+	 * @param txtPath
+	 * @return
+	 */
+	public String read_content(String txtPath) {		
+		List<String> lines = null;
+		try {
+			lines = Files.readAllLines(Paths.get(txtPath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		StringBuilder stringBuilder = new StringBuilder();
+		for (String line : lines) {
+			if (stringBuilder.length() > 0) {
+				stringBuilder.append("\n");
+			}
+			stringBuilder.append(line);
+		}
+		String contents = stringBuilder.toString();
+//		System.out.println(contents);
+		return contents;		
+	}
+	
+	/**
+	 * Read the txt and return line content list
+	 * @author Daniel
+	 *
+	 * @param txtPath
+	 * @return
+	 */
+	public List<String> read_lineList(String txtPath) {
+		List<String> lineList = null;
+		try {
+			lineList = Files.readAllLines(Paths.get(txtPath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return lineList;
+	}
 }
