@@ -8,7 +8,6 @@ package com.egroupai.engine.websocket;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.websocket.OnClose;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import com.egroup.controller.BaseController;
 import com.egroup.util.AttributeCheck;
 import com.egroup.util.DateUtil;
-import com.egroup.util.YamlUtil;
 import com.egroup.util.DateUtil.Compare;
 import com.egroup.util.DateUtil.Formate;
 import com.egroupai.engine.control.EngineFunc;
@@ -32,7 +30,6 @@ import com.egroupai.engine.control.GetResult;
 import com.egroupai.engine.entity.Face;
 import com.egroupai.engine.entity.RetrieveFace;
 import com.egroupai.engine.scenario.entity.BlackWhiteResult;
-import com.egroupai.engine.scenario.entity.TimeRecord;
 import com.egroupai.engine.util.CmdUtil;
 import com.google.gson.Gson;
 

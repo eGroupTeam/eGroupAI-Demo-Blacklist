@@ -17,7 +17,7 @@
 	<script type="text/javascript">
 		//判断当前浏览器是否支持WebSocket
 		if ('WebSocket' in window) {
-			websocket = new WebSocket("ws://localhost:8080/websocket/engine/1");
+			websocket = new WebSocket("ws://localhost:9080/websocket/engine/1");
 			console.log("link success")
 		} else {
 			alert('Not support websocket')
